@@ -1,18 +1,22 @@
 import './App.css';
-import GenresContainer from './Containers/GenresContainer';
-import MoviesMainSection from './Containers/MoviesMainSection';
+import { Routes, Route } from 'react-router-dom';
+
 import NavBar from './Containers/NavBar';
-import NowPlayingSectionContainer from './Containers/NowPlayingSectionContainer';
 import MoviesDataContextProvider from './Context/MoviesDataContextProvider';
+import Home from './pages/Home';
+import MovieDetails from './pages/MovieDetails';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
     <MoviesDataContextProvider>
       <main>
         <NavBar />
-        <NowPlayingSectionContainer />
-        <GenresContainer />
-        <MoviesMainSection />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movie/:id" element={<MovieDetails />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </main>
     </MoviesDataContextProvider>
   );
