@@ -1,5 +1,6 @@
 import './App.css';
 import NavBar from './Containers/NavBar';
+import NowPlayingSectionContainer from './Containers/NowPlayingSectionContainer';
 import MoviesDataContextProvider from './Context/MoviesDataContextProvider';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <MoviesDataContextProvider>
       <main>
         <NavBar />
+        <NowPlayingSectionContainer />
       </main>
     </MoviesDataContextProvider>
   );
