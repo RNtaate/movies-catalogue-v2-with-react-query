@@ -29,7 +29,7 @@ const NowPlayingSectionContainer = () => {
   return (
     <div>
       {nowPlayingMovies.map((movie) => (
-        <h4>{movie.title}</h4>
+        <span key={movie.id}>{movie.title}</span>
       ))}
     </div>
   );
