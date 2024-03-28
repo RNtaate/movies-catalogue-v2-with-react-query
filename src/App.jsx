@@ -1,10 +1,14 @@
 import './App.css';
+import NavBar from './Containers/NavBar';
+import MoviesDataContextProvider from './Context/MoviesDataContextProvider';
 
 function App() {
   return (
-    <>
-      <h1>Tan Stack Query</h1>
-    </>
+    <MoviesDataContextProvider>
+      <main>
+        <NavBar />
+      </main>
+    </MoviesDataContextProvider>
   );
 }
 
