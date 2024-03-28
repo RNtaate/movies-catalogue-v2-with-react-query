@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 import { useQuery } from '@tanstack/react-query';
 
@@ -18,13 +18,15 @@ const NowPlayingSectionContainer = () => {
     },
   });
 
+  useEffect(() => {
+    if (movieListQuery.isSuccess) {
+      setNowPlayingMovies(movieListQuery.data);
+    }
+  }, [movieListQuery.isSuccess]);
+
   if (movieListQuery.isLoading) return <div>Loading ...</div>;
   if (movieListQuery.isError)
     return <div>{JSON.stringify(movieListQuery.error)}</div>;
-
-  if (movieListQuery.isSuccess) {
-    setNowPlayingMovies(movieListQuery.data);
-  }
 
   return (
     <div>

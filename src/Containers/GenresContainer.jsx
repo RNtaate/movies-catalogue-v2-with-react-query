@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 import { useQuery } from '@tanstack/react-query';
 
@@ -19,17 +19,19 @@ const GenresContainer = () => {
     },
   });
 
+  useEffect(() => {
+    if (genresListQuery.isSuccess) {
+      setGenresList(genresListQuery.data);
+    }
+  }, [genresListQuery.isSuccess]);
+
   if (genresListQuery.isLoading) return <div>Loading Genres...</div>;
   if (genresListQuery.isError)
     return <div>{JSON.stringify(genresListQuery.error)}</div>;
 
-  if (genresListQuery.isSuccess) {
-    setGenresList(genresListQuery.data);
-  }
-
   return (
     <div>
-      <h3>GENRES</h3>
+      {genresListQuery.isSuccess && <h3>GENRES</h3>}
       {genresList.map((genre) => (
         <span key={genre.id}>{genre.name}</span>
       ))}
