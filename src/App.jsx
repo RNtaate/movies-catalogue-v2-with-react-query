@@ -10,7 +10,7 @@ import NotFound from './pages/NotFound';
 function App() {
   return (
     <MoviesDataContextProvider>
-      <main>
+      <main className="w-screen min-h-screen backdrop-blur-lg text-white font-montserrat">
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
