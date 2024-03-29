@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { wait } from '../Helpers/HelperMethods';
 import moviesData from '../utils/movies.json';
+import { NavLink } from 'react-router-dom';
 
 const moviesList = moviesData.results;
 
@@ -33,7 +34,9 @@ const MoviesMainSection = () => {
     <div>
       {movieListQuery.isSuccess && <h2>Action & Adventure</h2>}
       {moviesMainList.map((movie) => (
-        <span key={movie.id}>{movie.title}</span>
+        <NavLink key={movie.id} to={`/movie/${movie.title}`} state={movie}>
+          <span>{movie.title}</span>
+        </NavLink>
       ))}
     </div>
   );

@@ -15,7 +15,7 @@ const GenresContainer = () => {
     queryKey: ['genres'],
     enabled: nowPlayingMovies.length != 0,
     queryFn: () => {
-      return wait(4000).then(() => [...genres]);
+      return wait(1000).then(() => [...genres]);
     },
   });
 
