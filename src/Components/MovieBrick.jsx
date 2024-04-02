@@ -10,9 +10,12 @@ const MovieBrick = ({ movie }) => {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="py-2 space-y-1">
+      <div className="py-2 space-y-1 group-hover:text-slate-900 transition-all">
         <h3 className="text-xs font-medium truncate">{movie.title}</h3>
-        <h4 className="text-[10px]">7.8 | 2024</h4>
+        <h4 className="text-[10px] font-light">
+          <i className="fa-solid fa-star mr-1 text-orange-500"></i>
+          {movie.vote_average.toFixed(1)} | {movie.release_date.split('-')[0]}
+        </h4>
       </div>
     </div>
   );
