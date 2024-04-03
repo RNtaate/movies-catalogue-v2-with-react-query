@@ -1,5 +1,6 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
+import 'react-activity/dist/library.css';
 
 import NavBar from './Containers/NavBar';
 import MoviesDataContextProvider from './Context/MoviesDataContextProvider';
