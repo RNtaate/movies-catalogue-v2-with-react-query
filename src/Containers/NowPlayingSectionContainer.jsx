@@ -7,6 +7,7 @@ import moviesData from '../utils/movies.json';
 import NowPlayingComponent from '../Components/NowPlayingComponent';
 import Marquee from 'react-fast-marquee';
 import SpinnerLoader from '../Components/loaders/SpinnerLoader';
+import LoadingError from '../Components/ErrorComponents/LoadingError';
 
 const moviesList = moviesData.results;
 
@@ -44,9 +45,7 @@ const NowPlayingSectionContainer = () => {
   //React Query and component functionality code.
   const movieListQuery = useQuery({
     queryKey: ['nowPlaying'],
-    queryFn: () => {
-      return wait(4000).then(() => moviesList);
-    },
+    queryFn: () => wait(4000).then(() => [...moviesList]),
   });
 
   useEffect(() => {
@@ -60,7 +59,7 @@ const NowPlayingSectionContainer = () => {
   }
 
   if (movieListQuery.isError)
-    return <div>{JSON.stringify(movieListQuery.error)}</div>;
+    return <LoadingError message={JSON.stringify(movieListQuery.error)} />;
 
   return (
     <section className="px-5 relative">
@@ -71,7 +70,10 @@ const NowPlayingSectionContainer = () => {
         >
           {nowPlayingMovies.map((movie) => {
             return (
-              <div className="w-96 min-w-96 max-w-96 rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.8)] hover:ring-slate-500 hover:ring-1 hover:cursor-pointer">
+              <div
+                key={movie.id}
+                className="w-96 min-w-96 max-w-96 rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.8)] hover:ring-slate-500 hover:ring-1 hover:cursor-pointer"
+              >
                 <NowPlayingComponent movie={movie} />
               </div>
             );

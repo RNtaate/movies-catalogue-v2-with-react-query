@@ -7,6 +7,7 @@ import moviesData from '../utils/movies.json';
 import { NavLink } from 'react-router-dom';
 import MovieBrick from '../Components/MovieBrick';
 import SpinnerLoader from '../Components/loaders/SpinnerLoader';
+import LoadingError from '../Components/ErrorComponents/LoadingError';
 
 const moviesList = moviesData.results;
 
@@ -30,7 +31,7 @@ const MoviesMainSection = () => {
 
   if (movieListQuery.isLoading) return <SpinnerLoader variant="sentry" />;
   if (movieListQuery.isError)
-    return <div>{JSON.stringify(movieListQuery.error)}</div>;
+    return <LoadingError message={JSON.stringify(movieListQuery.error)} />;
 
   return (
     <section className="flex flex-col px-5">

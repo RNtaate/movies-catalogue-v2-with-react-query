@@ -6,6 +6,7 @@ import genresJsonData from '../utils/genres.json';
 import { wait } from '../Helpers/HelperMethods';
 import GenrePill from '../Components/GenrePill';
 import SpinnerLoader from '../Components/loaders/SpinnerLoader';
+import LoadingError from '../Components/ErrorComponents/LoadingError';
 
 const genres = genresJsonData.genres;
 const TRANSLATE_AMOUNT = 200;
@@ -57,7 +58,7 @@ const GenresContainer = () => {
 
   if (genresListQuery.isLoading) return <SpinnerLoader variant={'dots'} />;
   if (genresListQuery.isError)
-    return <div>{JSON.stringify(genresListQuery.error)}</div>;
+    return <LoadingError message={JSON.stringify(genresListQuery.error)} />;
 
   return (
     <section className="px-5">
