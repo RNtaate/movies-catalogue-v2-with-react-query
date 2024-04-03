@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import genresJsonData from '../utils/genres.json';
 import { wait } from '../Helpers/HelperMethods';
 import GenrePill from '../Components/GenrePill';
+import SpinnerLoader from '../Components/loaders/SpinnerLoader';
 
 const genres = genresJsonData.genres;
 const TRANSLATE_AMOUNT = 200;
@@ -44,7 +45,7 @@ const GenresContainer = () => {
     queryKey: ['genres'],
     enabled: nowPlayingMovies.length != 0,
     queryFn: () => {
-      return wait(2000).then(() => [...genres]);
+      return wait(4000).then(() => [...genres]);
     },
   });
 
@@ -54,7 +55,7 @@ const GenresContainer = () => {
     }
   }, [genresListQuery.isSuccess]);
 
-  if (genresListQuery.isLoading) return <div>Loading Genres...</div>;
+  if (genresListQuery.isLoading) return <SpinnerLoader variant={'dots'} />;
   if (genresListQuery.isError)
     return <div>{JSON.stringify(genresListQuery.error)}</div>;
 

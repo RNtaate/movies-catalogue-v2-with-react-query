@@ -6,6 +6,7 @@ import { wait } from '../Helpers/HelperMethods';
 import moviesData from '../utils/movies.json';
 import { NavLink } from 'react-router-dom';
 import MovieBrick from '../Components/MovieBrick';
+import SpinnerLoader from '../Components/loaders/SpinnerLoader';
 
 const moviesList = moviesData.results;
 
@@ -17,7 +18,7 @@ const MoviesMainSection = () => {
     queryKey: ['movies'],
     enabled: genresList.length != 0,
     queryFn: () => {
-      return wait(2000).then(() => moviesList);
+      return wait(4000).then(() => moviesList);
     },
   });
 
@@ -27,7 +28,7 @@ const MoviesMainSection = () => {
     }
   }, [movieListQuery.isSuccess]);
 
-  if (movieListQuery.isLoading) return <div>Loading movies ...</div>;
+  if (movieListQuery.isLoading) return <SpinnerLoader variant="sentry" />;
   if (movieListQuery.isError)
     return <div>{JSON.stringify(movieListQuery.error)}</div>;
 

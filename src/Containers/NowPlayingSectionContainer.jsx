@@ -6,6 +6,7 @@ import { wait } from '../Helpers/HelperMethods';
 import moviesData from '../utils/movies.json';
 import NowPlayingComponent from '../Components/NowPlayingComponent';
 import Marquee from 'react-fast-marquee';
+import SpinnerLoader from '../Components/loaders/SpinnerLoader';
 
 const moviesList = moviesData.results;
 
@@ -44,7 +45,7 @@ const NowPlayingSectionContainer = () => {
   const movieListQuery = useQuery({
     queryKey: ['nowPlaying'],
     queryFn: () => {
-      return wait(2000).then(() => moviesList);
+      return wait(4000).then(() => moviesList);
     },
   });
 
@@ -54,7 +55,10 @@ const NowPlayingSectionContainer = () => {
     }
   }, [movieListQuery.isSuccess]);
 
-  if (movieListQuery.isLoading) return <div>Loading ...</div>;
+  if (movieListQuery.isLoading) {
+    return <SpinnerLoader />;
+  }
+
   if (movieListQuery.isError)
     return <div>{JSON.stringify(movieListQuery.error)}</div>;
 
