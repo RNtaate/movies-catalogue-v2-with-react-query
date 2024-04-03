@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { wait } from '../Helpers/HelperMethods';
 import moviesData from '../utils/movies.json';
 import { NavLink } from 'react-router-dom';
+import MovieBrick from '../Components/MovieBrick';
 
 const moviesList = moviesData.results;
 
@@ -31,14 +32,18 @@ const MoviesMainSection = () => {
     return <div>{JSON.stringify(movieListQuery.error)}</div>;
 
   return (
-    <div>
-      {movieListQuery.isSuccess && <h2>Action & Adventure</h2>}
-      {moviesMainList.map((movie) => (
-        <NavLink key={movie.id} to={`/movie/${movie.title}`} state={movie}>
-          <span>{movie.title}</span>
-        </NavLink>
-      ))}
-    </div>
+    <section className="flex flex-col px-5">
+      {movieListQuery.isSuccess && (
+        <div className="py-5 mt-4">
+          <h2 className="font-robotoflex text-xl">Action & Adventure</h2>
+        </div>
+      )}
+      <section className="flex flex-wrap justify-evenly gap-2 pb-8">
+        {moviesMainList.map((movie) => {
+          return <MovieBrick key={movie.id} movie={movie} />;
+        })}
+      </section>
+    </section>
   );
 };
 

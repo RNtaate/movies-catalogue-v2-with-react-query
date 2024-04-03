@@ -15,6 +15,10 @@ const GenresContainer = () => {
   const [translate, setTranslate] = useState(0);
   const containerRef = useRef(null);
 
+  const moviesDataContext = useContext(MoviesDataContext);
+  const { genresList, setGenresList, nowPlayingMovies } = moviesDataContext;
+
+  //use effect for implementing functionality for the slider.
   useEffect(() => {
     if (containerRef.current == null) return;
 
@@ -33,28 +37,26 @@ const GenresContainer = () => {
     return () => {
       observer.disconnect();
     };
-  }, [genres, translate]);
+  }, [genresList, translate]);
 
-  // const moviesDataContext = useContext(MoviesDataContext);
-  // const { genresList, setGenresList, nowPlayingMovies } = moviesDataContext;
+  //React Query and General Component functionality.
+  const genresListQuery = useQuery({
+    queryKey: ['genres'],
+    enabled: nowPlayingMovies.length != 0,
+    queryFn: () => {
+      return wait(2000).then(() => [...genres]);
+    },
+  });
 
-  // const genresListQuery = useQuery({
-  //   queryKey: ['genres'],
-  //   enabled: nowPlayingMovies.length != 0,
-  //   queryFn: () => {
-  //     return wait(1000).then(() => [...genres]);
-  //   },
-  // });
+  useEffect(() => {
+    if (genresListQuery.isSuccess) {
+      setGenresList(genresListQuery.data);
+    }
+  }, [genresListQuery.isSuccess]);
 
-  // useEffect(() => {
-  //   if (genresListQuery.isSuccess) {
-  //     setGenresList(genresListQuery.data);
-  //   }
-  // }, [genresListQuery.isSuccess]);
-
-  // if (genresListQuery.isLoading) return <div>Loading Genres...</div>;
-  // if (genresListQuery.isError)
-  //   return <div>{JSON.stringify(genresListQuery.error)}</div>;
+  if (genresListQuery.isLoading) return <div>Loading Genres...</div>;
+  if (genresListQuery.isError)
+    return <div>{JSON.stringify(genresListQuery.error)}</div>;
 
   return (
     <section className="px-5">
@@ -63,7 +65,7 @@ const GenresContainer = () => {
           className="transition-transform whitespace-nowrap flex gap-2 w-[max-content]"
           style={{ transform: `translateX(-${translate}px)` }}
         >
-          {genres.map((genre) => {
+          {genresList.map((genre) => {
             return <GenrePill genre={genre} />;
           })}
         </div>

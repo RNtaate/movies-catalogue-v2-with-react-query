@@ -17,6 +17,9 @@ const NowPlayingSectionContainer = () => {
   const [isRightShowing, setIsRightShowing] = useState(false);
   const containerRef = useRef(null);
 
+  const moviesDataContext = useContext(MoviesDataContext);
+  const { nowPlayingMovies, setNowPlayingMovies } = moviesDataContext;
+
   useEffect(() => {
     if (containerRef.current == null) return;
 
@@ -35,28 +38,25 @@ const NowPlayingSectionContainer = () => {
     return () => {
       observer.disconnect();
     };
-  }, [moviesList, translate]);
+  }, [nowPlayingMovies, translate]);
 
   //React Query and component functionality code.
-  // const moviesDataContext = useContext(MoviesDataContext);
-  // const { nowPlayingMovies, setNowPlayingMovies } = moviesDataContext;
+  const movieListQuery = useQuery({
+    queryKey: ['nowPlaying'],
+    queryFn: () => {
+      return wait(2000).then(() => moviesList);
+    },
+  });
 
-  // const movieListQuery = useQuery({
-  //   queryKey: ['nowPlaying'],
-  //   queryFn: () => {
-  //     return wait(2000).then(() => moviesList);
-  //   },
-  // });
+  useEffect(() => {
+    if (movieListQuery.isSuccess) {
+      setNowPlayingMovies(movieListQuery.data);
+    }
+  }, [movieListQuery.isSuccess]);
 
-  // useEffect(() => {
-  //   if (movieListQuery.isSuccess) {
-  //     setNowPlayingMovies(movieListQuery.data);
-  //   }
-  // }, [movieListQuery.isSuccess]);
-
-  // if (movieListQuery.isLoading) return <div>Loading ...</div>;
-  // if (movieListQuery.isError)
-  //   return <div>{JSON.stringify(movieListQuery.error)}</div>;
+  if (movieListQuery.isLoading) return <div>Loading ...</div>;
+  if (movieListQuery.isError)
+    return <div>{JSON.stringify(movieListQuery.error)}</div>;
 
   return (
     <section className="px-5 relative">
@@ -65,7 +65,7 @@ const NowPlayingSectionContainer = () => {
           className="flex mb-10 w-max gap-3 transition-transform"
           style={{ transform: `translateX(-${translate}px)` }}
         >
-          {moviesList.map((movie) => {
+          {nowPlayingMovies.map((movie) => {
             return (
               <div className="w-96 min-w-96 max-w-96 rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.8)] hover:ring-slate-500 hover:ring-1 hover:cursor-pointer">
                 <NowPlayingComponent movie={movie} />
