@@ -1,6 +1,5 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import 'keen-slider/keen-slider.min.css';
 
 import NavBar from './Containers/NavBar';
 import MoviesDataContextProvider from './Context/MoviesDataContextProvider';
