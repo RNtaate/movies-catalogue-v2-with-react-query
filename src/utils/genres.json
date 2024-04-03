@@ -1,6 +1,10 @@
 {
   "genres": [
     {
+      "id": "genres",
+      "name": "Default"
+    },
+    {
       "id": 28,
       "name": "Action"
     },
