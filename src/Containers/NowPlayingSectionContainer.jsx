@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 import { useQuery } from '@tanstack/react-query';
-import { useKeenSlider } from 'keen-slider/react';
 
 import { wait } from '../Helpers/HelperMethods';
 import moviesData from '../utils/movies.json';
@@ -10,98 +9,110 @@ import Marquee from 'react-fast-marquee';
 
 const moviesList = moviesData.results;
 
+const TRANSLATE_AMOUNT = 200;
+
 const NowPlayingSectionContainer = () => {
-  // Code for the keen slider dependency.
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [loaded, setLoaded] = useState(false);
-  const [sliderRef, instanceRef] = useKeenSlider({
-    initial: 0,
-    slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
-    },
-    created() {
-      setLoaded(true);
-    },
-    slides: {
-      perView: 3,
-      spacing: 15,
-    },
-    loop: true,
-  });
-
-  //React Query and component functionality code.
-  const moviesDataContext = useContext(MoviesDataContext);
-  const { nowPlayingMovies, setNowPlayingMovies } = moviesDataContext;
-
-  const movieListQuery = useQuery({
-    queryKey: ['nowPlaying'],
-    queryFn: () => {
-      return wait(2000).then(() => moviesList);
-    },
-  });
+  const [translate, setTranslate] = useState(0);
+  const [isLeftShowing, setIsLeftShowing] = useState(false);
+  const [isRightShowing, setIsRightShowing] = useState(false);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    if (movieListQuery.isSuccess) {
-      setNowPlayingMovies(movieListQuery.data);
-    }
-  }, [movieListQuery.isSuccess]);
+    if (containerRef.current == null) return;
 
-  if (movieListQuery.isLoading) return <div>Loading ...</div>;
-  if (movieListQuery.isError)
-    return <div>{JSON.stringify(movieListQuery.error)}</div>;
+    const observer = new ResizeObserver((entries) => {
+      const container = entries[0]?.target;
+      if (container == null) return;
+
+      setIsLeftShowing(translate > 0);
+      setIsRightShowing(
+        translate + container.clientWidth < container.scrollWidth
+      );
+    });
+
+    observer.observe(containerRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [moviesList, translate]);
+
+  //React Query and component functionality code.
+  // const moviesDataContext = useContext(MoviesDataContext);
+  // const { nowPlayingMovies, setNowPlayingMovies } = moviesDataContext;
+
+  // const movieListQuery = useQuery({
+  //   queryKey: ['nowPlaying'],
+  //   queryFn: () => {
+  //     return wait(2000).then(() => moviesList);
+  //   },
+  // });
+
+  // useEffect(() => {
+  //   if (movieListQuery.isSuccess) {
+  //     setNowPlayingMovies(movieListQuery.data);
+  //   }
+  // }, [movieListQuery.isSuccess]);
+
+  // if (movieListQuery.isLoading) return <div>Loading ...</div>;
+  // if (movieListQuery.isError)
+  //   return <div>{JSON.stringify(movieListQuery.error)}</div>;
 
   return (
-    <>
-      <div className="navigation-wrapper px-5 relative">
-        <div ref={sliderRef} className="keen-slider pb-8">
-          {nowPlayingMovies.map((movie) => {
+    <section className="px-5 relative">
+      <div ref={containerRef} className="overflow-hidden">
+        <div
+          className="flex mb-10 w-max gap-3 transition-transform"
+          style={{ transform: `translateX(-${translate}px)` }}
+        >
+          {moviesList.map((movie) => {
             return (
-              <div className="keen-slider__slide w-[500px] min-w-[500px] max-w-[500px] rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.8)] hover:ring-slate-500 hover:ring-1 hover:cursor-pointer">
+              <div className="w-96 min-w-96 max-w-96 rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.8)] hover:ring-slate-500 hover:ring-1 hover:cursor-pointer">
                 <NowPlayingComponent movie={movie} />
               </div>
             );
           })}
         </div>
-        {loaded && instanceRef.current && (
-          <>
-            <Arrow
-              left
-              onClick={(e) =>
-                e.stopPropagation() || instanceRef.current?.prev()
-              }
-            />
-
-            <Arrow
-              onClick={(e) =>
-                e.stopPropagation() || instanceRef.current?.next()
-              }
-            />
-          </>
-        )}
       </div>
-    </>
+
+      {isLeftShowing && (
+        <div className="absolute top-1/2 -translate-y-1/2 left-1 text-[80px]">
+          <button
+            type="button"
+            onClick={() => {
+              setTranslate((prevTranslate) => {
+                const newTranslate = prevTranslate - TRANSLATE_AMOUNT;
+                if (newTranslate < 0) return 0;
+                return newTranslate;
+              });
+            }}
+          >
+            <i className="fa-solid fa-angle-left"></i>
+          </button>
+        </div>
+      )}
+
+      {isRightShowing && (
+        <div className="absolute top-1/2 -translate-y-1/2 right-1 text-[80px]">
+          <button
+            type="button"
+            onClick={() => {
+              setTranslate((prevTranslate) => {
+                const newTranslate = prevTranslate + TRANSLATE_AMOUNT;
+                const edge = containerRef.current.scrollWidth;
+                const width = containerRef.current.clientWidth;
+                console.log(edge, width);
+                if (newTranslate + width >= edge) return edge - width;
+                return newTranslate;
+              });
+            }}
+          >
+            <i className="fa-solid fa-angle-right"></i>
+          </button>
+        </div>
+      )}
+    </section>
   );
 };
 
 export default NowPlayingSectionContainer;
-
-function Arrow(props) {
-  const disabled = props.disabled ? ' arrow--disabled' : '';
-  return (
-    <svg
-      onClick={props.onClick}
-      className={`arrow ${
-        props.left ? 'arrow--left' : 'arrow--right'
-      } ${disabled}`}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-    >
-      {props.left && (
-        <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
-      )}
-      {!props.left && (
-        <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
-      )}
-    </svg>
-  );
-}
