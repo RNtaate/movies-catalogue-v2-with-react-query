@@ -7,7 +7,7 @@ const NavBar = () => {
         NORP.<span className="text-sm font-light">MOVIES</span>.
       </h1>
       <span className="text-3xl cursor-pointer text-slate-300">
-        <i class="fa-brands fa-github"></i>
+        <i className="fa-brands fa-github"></i>
       </span>
     </nav>
   );
