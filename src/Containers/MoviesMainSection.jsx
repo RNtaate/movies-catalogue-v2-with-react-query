@@ -36,8 +36,11 @@ const MoviesMainSection = () => {
   return (
     <section className="flex flex-col px-5">
       {movieListQuery.isSuccess && (
-        <div className="py-5 mt-4">
-          <h2 className="font-robotoflex text-xl">Action & Adventure</h2>
+        <div className="py-5 mt-4 font-robotoflex text-md font-bold flex items-center justify-between">
+          <h2 className="">ACTION & ADVENTURE</h2>
+          <span className="inline-block bg-slate-900/[.6] py-1 px-7 rounded-full">
+            2024
+          </span>
         </div>
       )}
       <section className="flex flex-wrap justify-evenly gap-2 pb-8">
