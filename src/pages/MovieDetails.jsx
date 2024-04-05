@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 
@@ -80,6 +80,14 @@ const MovieDetails = () => {
               </div>
             </div>
           </div>
+
+          <NavLink to="/" className="appearance-none">
+            <div className="absolute text-3xl top-0 inline-block mx-16 my-3 group">
+              <button type="button">
+                <i className="fa-solid fa-angles-left group-hover:text-slate-500"></i>
+              </button>
+            </div>
+          </NavLink>
         </section>
       )}
     </>
