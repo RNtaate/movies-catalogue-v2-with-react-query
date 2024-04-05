@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 
 import singleMovieData from '../utils/SingleMovie.json';
-import { wait, timeConverter } from '../Helpers/HelperMethods';
+import { wait, timeConverter, dateConverter } from '../Helpers/HelperMethods';
 
 const MovieDetails = () => {
   // const location = useLocation();
@@ -64,7 +64,7 @@ const MovieDetails = () => {
               <div className="text-xs font-robotoflex font-extrabold">
                 {timeConverter(movieDetails.runtime)}
                 <span className="mx-2">&#x2022;</span>
-                {movieDetails.release_date}
+                {dateConverter(movieDetails.release_date).toUpperCase()}
               </div>
               <p className="text-sm tracking-wide leading-6 line-clamp-5 font-light my-3">
                 {movieDetails.overview}
