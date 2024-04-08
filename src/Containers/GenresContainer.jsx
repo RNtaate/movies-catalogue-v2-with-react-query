@@ -18,8 +18,13 @@ const GenresContainer = () => {
   const containerRef = useRef(null);
 
   const moviesDataContext = useContext(MoviesDataContext);
-  const { genresList, setGenresList, nowPlayingMovies, setSelectedGenre } =
-    moviesDataContext;
+  const {
+    genresList,
+    setGenresList,
+    nowPlayingMovies,
+    selectedGenre,
+    setSelectedGenre,
+  } = moviesDataContext;
 
   //use effect for implementing functionality for the slider.
   useEffect(() => {
@@ -59,7 +64,7 @@ const GenresContainer = () => {
         name: 'Action & Adventure',
       };
       setGenresList([{ ...defaultGenre }, ...genresArray]);
-      setSelectedGenre({ ...defaultGenre });
+      if (selectedGenre == null) setSelectedGenre({ ...defaultGenre });
     }
   }, [genresListQuery.isSuccess]);
 
