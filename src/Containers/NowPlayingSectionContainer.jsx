@@ -65,7 +65,7 @@ const NowPlayingSectionContainer = () => {
     <section className="px-5 relative">
       <div ref={containerRef} className="overflow-hidden">
         <div
-          className="flex mb-10 w-max gap-3 transition-transform"
+          className="flex mb-10 w-max gap-3 transition-transform pt-1"
           style={{ transform: `translateX(-${translate}px)` }}
         >
           {nowPlayingMovies.map((movie) => {

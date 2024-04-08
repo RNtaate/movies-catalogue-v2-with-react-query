@@ -17,7 +17,7 @@ const NowPlayingComponent = ({ movie }) => {
         <div className="absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-t from-black to-[50%] flex flex-col justify-end gap-2 p-3">
           <h2 className="font-medium truncate">{movie.title}</h2>
           <div className="text-[10px] text-white flex items-center">
-            <i className="fa-solid fa-circle-play text-slate-500 mr-2 text-sm"></i>
+            <i className="fa-solid fa-circle-play text-green-500 mr-2 text-sm"></i>
             IN CINEMAS NOW
           </div>
         </div>
