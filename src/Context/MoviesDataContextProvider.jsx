@@ -10,6 +10,7 @@ const MoviesDataContextProvider = ({ children }) => {
   const [movieDetails, setMovieDetails] = useState(null);
   const [selectedYear, setSelectedYear] = useState(CURRENT_YEAR);
   const [selectedGenre, setSelectedGenre] = useState(null);
+  const [isSearchWithGenresOpen, setIsSearchWithGenresOpen] = useState(false);
 
   const finalValues = {
     nowPlayingMovies,
@@ -24,6 +25,8 @@ const MoviesDataContextProvider = ({ children }) => {
     setSelectedYear,
     selectedGenre,
     setSelectedGenre,
+    isSearchWithGenresOpen,
+    setIsSearchWithGenresOpen,
   };
 
   return (
