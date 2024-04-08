@@ -1,4 +1,5 @@
 export const API_KEY = process.env.API_KEY;
+export const CURRENT_YEAR = new Date().getFullYear();
 
 export const getGenreListUrl = (apiKey) =>
   `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`;
