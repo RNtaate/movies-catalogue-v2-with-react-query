@@ -1,18 +1,27 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { CURRENT_YEAR } from '../Helpers/HelperConstants';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 
-const YearsSelect = () => {
+import useOutsideClick from '../hooks/useOutsideClick';
+
+const YearsSelect = ({ disabled = false }) => {
   const movieDataContext = useContext(MoviesDataContext);
   const { selectedYear, setSelectedYear } = movieDataContext;
 
   const [isOpen, setIsOpen] = useState(false);
+  const yearRef = useRef(null);
+
+  // Using the custom hook for detecting outside element clicks.
+  useOutsideClick(yearRef, () => setIsOpen(false));
 
   const years = getYears();
   return (
     <div
-      className="inline-block bg-slate-900/[.6] flex justify-between items-center py-2 w-32 max-w-32 min-w-32 pl-4 pr-3 relative rounded-full text-sm font-robotoflex font-semibold cursor-pointer"
-      onClick={() => setIsOpen(!isOpen)}
+      className={`inline-block bg-slate-900/[.6] flex justify-between items-center py-2 w-32 max-w-32 min-w-32 pl-4 pr-3 relative rounded-full text-sm font-robotoflex font-semibold ${
+        disabled ? 'pointer-events-none' : 'pointer-events-auto cursor-pointer'
+      }`}
+      onClick={(e) => setIsOpen(!isOpen)}
+      ref={yearRef}
     >
       <span>{selectedYear}</span>
       <i
@@ -22,7 +31,7 @@ const YearsSelect = () => {
       ></i>
 
       <div
-        className={`absolute top-[110%] left-0 w-full bg-slate-900/[.6] shadow-[0_0_10px_3px_rgba(0,0,0,0.4)] rounded-xl overflow-hidden ${
+        className={`absolute top-[110%] left-0 w-full bg-slate-900/[.9] shadow-[0_0_10px_3px_rgba(0,0,0,0.4)] rounded-xl overflow-hidden ${
           isOpen ? 'block' : 'hidden'
         }`}
       >
