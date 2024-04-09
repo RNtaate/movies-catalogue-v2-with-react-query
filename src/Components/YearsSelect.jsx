@@ -4,9 +4,10 @@ import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 
 import useOutsideClick from '../hooks/useOutsideClick';
 
-const YearsSelect = ({ disabled = false }) => {
+const YearsSelect = ({ disabled = false, hasFetching = false }) => {
   const movieDataContext = useContext(MoviesDataContext);
-  const { selectedYear, setSelectedYear } = movieDataContext;
+  const { selectedYear, setSelectedYear, setIsSearchWithGenresOpen } =
+    movieDataContext;
 
   const [isOpen, setIsOpen] = useState(false);
   const yearRef = useRef(null);
@@ -47,6 +48,9 @@ const YearsSelect = ({ disabled = false }) => {
                 onClick={(e) => {
                   if (e.target.value != selectedYear) {
                     setSelectedYear(e.target.value);
+                  }
+                  if (!hasFetching) {
+                    setIsSearchWithGenresOpen(true);
                   }
                 }}
               >
