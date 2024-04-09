@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { Dots } from 'react-activity';
 
 import { wait } from '../Helpers/HelperMethods';
 import { getMoviesList } from '../Helpers/HelperFetchMethods';
@@ -74,12 +75,16 @@ const MoviesMainSection = () => {
             })}
       </section>
       {hasNextPage && (
-        <div className="bg-red-500">
+        <div className="flex justify-center items-center py-4">
           <button
-            type="button py-2 px-5 border border-slate-500 bg-zinc-500"
+            type="button"
+            disabled={isFetchingNextPage}
+            className={`py-4 px-5 border border-transparent text-xs font-semibold text-slate-100 whitespace-nowrap rounded-xl bg-slate-200 bg-opacity-40 hover:bg-opacity-20 hover:border-slate-400 transition-all ${
+              isFetchingNextPage ? 'cursor-not-allowed' : 'cursor-pointer'
+            }`}
             onClick={() => fetchNextPage()}
           >
-            {isFetchingNextPage ? 'Loading...' : 'Load More'}
+            {isFetchingNextPage ? <Dots /> : 'Load More'}
           </button>
         </div>
       )}
