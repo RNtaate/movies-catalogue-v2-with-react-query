@@ -6,7 +6,7 @@ export const MoviesDataContext = createContext();
 const MoviesDataContextProvider = ({ children }) => {
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   const [genresList, setGenresList] = useState([]);
-  const [moviesMainList, setMoviesMainList] = useState([]);
+  const [moviesMainList, setMoviesMainList] = useState(null);
   const [movieDetails, setMovieDetails] = useState(null);
   const [selectedYear, setSelectedYear] = useState(CURRENT_YEAR);
   const [selectedGenre, setSelectedGenre] = useState(null);
