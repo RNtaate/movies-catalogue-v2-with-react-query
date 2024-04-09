@@ -5,6 +5,8 @@ import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 
 import singleMovieData from '../utils/SingleMovie.json';
 import { wait, timeConverter, dateConverter } from '../Helpers/HelperMethods';
+import SpinnerLoader from '../Components/loaders/SpinnerLoader';
+import NowPlayingCardLoader from '../Components/loaders/NowPlayingCardLoader';
 
 const MovieDetails = () => {
   // const location = useLocation();
@@ -23,6 +25,7 @@ const MovieDetails = () => {
 
   const movieContext = useContext(MoviesDataContext);
   const { movieDetails, setMovieDetails } = movieContext;
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const movieDetailsQuery = useQuery({
     queryKey: ['movieDetails'],
@@ -39,7 +42,7 @@ const MovieDetails = () => {
     }
   }, [movieDetailsQuery.isSuccess]);
 
-  if (movieDetailsQuery.isLoading) return <div>Loading Movie...</div>;
+  if (movieDetailsQuery.isLoading) return <SpinnerLoader variant="sentry" />;
   if (movieDetailsQuery.isError)
     return (
       <div>
@@ -50,12 +53,13 @@ const MovieDetails = () => {
   return (
     <>
       {movieDetails != null && (
-        <section
-          style={{
-            backgroundImage: `url(https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path})`,
-          }}
-          className="w-screen h-screen overflow-hidden bg-center bg-no-repeat bg-cover relative"
-        >
+        <section className="w-screen h-screen overflow-hidden relative">
+          <img
+            alt="Image backdrop"
+            src={`https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path}`}
+            className="w-full h-full object-cover"
+            onLoad={() => setImageLoaded(true)}
+          />
           <div className="absolute top-0 right-0 bottom-0 left-0 flex">
             <div className="w-[50%] flex flex-col justify-center gap-4 px-16 bg-gradient-to-r from-black/[.9] backdrop-blur-[1px] shadow-[0_0_10px_3px_rgba(0,0,0,0.8)]">
               <h1 className="font-roboto text-6xl font-extrabold">
@@ -88,6 +92,7 @@ const MovieDetails = () => {
               </button>
             </div>
           </NavLink>
+          {!imageLoaded && <NowPlayingCardLoader />}
         </section>
       )}
     </>
