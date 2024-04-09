@@ -72,7 +72,7 @@ const NowPlayingSectionContainer = () => {
             return (
               <div
                 key={movie.id}
-                className="w-96 min-w-96 max-w-96 rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.8)] hover:ring-slate-500 hover:ring-1 hover:cursor-pointer"
+                className="w-96 min-w-96 max-w-96 h-auto rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.8)] hover:ring-slate-500 hover:ring-1 hover:cursor-pointer"
               >
                 <NowPlayingComponent movie={movie} />
               </div>
