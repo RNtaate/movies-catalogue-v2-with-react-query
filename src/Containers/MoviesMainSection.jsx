@@ -33,7 +33,6 @@ const MoviesMainSection = () => {
     queryKey: ['movies'],
     enabled: genresList.length != 0,
     getNextPageParam: (prevData) => {
-      console.log('This is previous data', prevData);
       const nextPageNumber = prevData.data.page + 1;
       const totalPages = prevData.data.total_pages;
       if (nextPageNumber <= MAXIMUM_PAGES && nextPageNumber <= totalPages) {
@@ -49,7 +48,6 @@ const MoviesMainSection = () => {
 
   useEffect(() => {
     if (status == 'success') {
-      console.log(data);
       setMoviesMainList(data);
     }
   }, [status, data]);
