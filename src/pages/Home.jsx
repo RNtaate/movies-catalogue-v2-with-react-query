@@ -12,7 +12,7 @@ const Home = () => {
     movieDataContext;
 
   return (
-    <section className="min-w-screen max-w-screen min-h-screen max-h-screen overflow-hidden relative">
+    <section className="min-w-screen max-w-screen min-h-screen max-h-screen overflow-hidden relative select-none">
       <div className="overflow-auto max-h-screen">
         <NavBar />
         <NowPlayingSectionContainer />

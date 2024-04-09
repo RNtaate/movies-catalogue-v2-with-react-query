@@ -7,10 +7,10 @@ const GenrePill = ({ genre }) => {
 
   return (
     <div
-      className={`py-4 px-5 border text-xs text-slate-100 whitespace-nowrap rounded-xl bg-slate-200 hover:bg-opacity-20 hover:bg-slate-900 hover:border-slate-400 cursor-pointer transition-all ${
+      className={`py-4 px-5 border text-xs text-slate-100 whitespace-nowrap rounded-xl bg-slate-200 hover:bg-opacity-20 hover:border-slate-400 cursor-pointer transition-all ${
         selectedGenre.name == genre.name
           ? 'bg-opacity-20 border-slate-400 hover:bg-slate-300'
-          : 'bg-opacity-10 border-transparent'
+          : 'bg-opacity-10 border-transparent hover:bg-slate-900'
       }`}
       onClick={() => setSelectedGenre({ ...genre })}
     >
