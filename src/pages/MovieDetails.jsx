@@ -7,21 +7,21 @@ import singleMovieData from '../utils/SingleMovie.json';
 import { wait, timeConverter, dateConverter } from '../Helpers/HelperMethods';
 import SpinnerLoader from '../Components/loaders/SpinnerLoader';
 import NowPlayingCardLoader from '../Components/loaders/NowPlayingCardLoader';
+import { getMovieDetails } from '../Helpers/HelperFetchMethods';
 
 const MovieDetails = () => {
-  // const location = useLocation();
-  // console.log(location);
-  // const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // const [singleMovie, setSingleMovie] = useState(null);
+  const [singleMovie, setSingleMovie] = useState(null);
 
-  // useEffect(() => {
-  //   if (!location.state) {
-  //     navigate('/', { replace: true });
-  //   } else {
-  //     setSingleMovie({ ...location.state });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!location.state) {
+      navigate('/', { replace: true });
+    } else {
+      setSingleMovie({ ...location.state });
+    }
+  }, []);
 
   const movieContext = useContext(MoviesDataContext);
   const { movieDetails, setMovieDetails } = movieContext;
@@ -29,16 +29,13 @@ const MovieDetails = () => {
 
   const movieDetailsQuery = useQuery({
     queryKey: ['movieDetails'],
-    queryFn: () =>
-      wait(2000).then(() => {
-        return { ...singleMovieData };
-      }),
+    enabled: singleMovie != null,
+    queryFn: () => getMovieDetails(singleMovie.id).then((res) => res),
   });
 
   useEffect(() => {
     if (movieDetailsQuery.isSuccess) {
-      console.log(movieDetailsQuery.data);
-      setMovieDetails({ ...movieDetailsQuery.data });
+      setMovieDetails({ ...movieDetailsQuery.data.data });
     }
   }, [movieDetailsQuery.isSuccess]);
 
@@ -61,7 +58,7 @@ const MovieDetails = () => {
             onLoad={() => setImageLoaded(true)}
           />
           <div className="absolute top-0 right-0 bottom-0 left-0 flex">
-            <div className="w-[50%] flex flex-col justify-center gap-4 px-16 bg-gradient-to-r from-black/[.9] backdrop-blur-[1px] shadow-[0_0_10px_3px_rgba(0,0,0,0.8)]">
+            <div className="w-[50%] flex flex-col justify-center gap-4 px-16 bg-gradient-to-r from-black backdrop-blur-[2px] shadow-[0_0_10px_3px_rgba(0,0,0,0.8)]">
               <h1 className="font-roboto text-6xl font-extrabold">
                 {movieDetails.title.toUpperCase()}
               </h1>
@@ -70,7 +67,7 @@ const MovieDetails = () => {
                 <span className="mx-2">&#x2022;</span>
                 {dateConverter(movieDetails.release_date).toUpperCase()}
               </div>
-              <p className="text-sm tracking-wide leading-6 line-clamp-5 font-light my-3">
+              <p className="text-[13px] tracking-wide leading-6 line-clamp-5 font-normal my-3">
                 {movieDetails.overview}
               </p>
               <div className="flex flex-wrap gap-3 text-xs font-robotoflex font-extrabold">
