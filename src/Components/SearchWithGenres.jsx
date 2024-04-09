@@ -1,11 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import YearsSelect from './YearsSelect';
 import GenreSelect from './GenreSelect';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 
 const SearchWithGenres = () => {
   const movieDataContext = useContext(MoviesDataContext);
-  const { setIsSearchWithGenresOpen } = movieDataContext;
+  const {
+    setIsSearchWithGenresOpen,
+    selectedGenre,
+    setSelectedGenre,
+    setSelectedYear,
+    moviesMainList,
+  } = movieDataContext;
+  const [localGenre, setLocalGenre] = useState({ ...selectedGenre });
 
   return (
     <section className="absolute top-0 left-0 bottom-0 right-0 flex justify-center items-start py-10 bg-slate-900/[0.9]">
@@ -14,7 +21,7 @@ const SearchWithGenres = () => {
           SEARCH MOVIES BY YEAR AND GENRE
         </h4>
         <div className="flex flex-col md:flex-row gap-5">
-          <GenreSelect />
+          <GenreSelect setLocalGenre={setLocalGenre} localGenre={localGenre} />
           <YearsSelect />
           <button
             type="button"
@@ -27,7 +34,12 @@ const SearchWithGenres = () => {
         <button
           type="button"
           className="absolute right-5 top-2 text-xl hover:text-slate-900 transition-all"
-          onClick={() => setIsSearchWithGenresOpen(false)}
+          onClick={() => {
+            let currentMovie = moviesMainList[0];
+            let currentYear = new Date(currentMovie.release_date).getFullYear();
+            setSelectedYear(currentYear);
+            setIsSearchWithGenresOpen(false);
+          }}
         >
           <i className="fa-solid fa-xmark"></i>
         </button>
