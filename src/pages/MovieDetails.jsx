@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 
 import singleMovieData from '../utils/SingleMovie.json';
@@ -12,6 +12,7 @@ import { getMovieDetails } from '../Helpers/HelperFetchMethods';
 const MovieDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [singleMovie, setSingleMovie] = useState(null);
 
@@ -35,11 +36,13 @@ const MovieDetails = () => {
 
   useEffect(() => {
     if (movieDetailsQuery.isSuccess) {
+      console.log('I have reached this place');
       setMovieDetails({ ...movieDetailsQuery.data.data });
     }
-  }, [movieDetailsQuery.isSuccess]);
+  }, [movieDetailsQuery.isSuccess, movieDetailsQuery.data]);
 
-  if (movieDetailsQuery.isLoading) return <SpinnerLoader variant="sentry" />;
+  if (movieDetailsQuery.isLoading || movieDetailsQuery.isFetching)
+    return <SpinnerLoader variant="sentry" />;
   if (movieDetailsQuery.isError)
     return (
       <div>
@@ -89,7 +92,7 @@ const MovieDetails = () => {
               </button>
             </div>
           </NavLink>
-          {!imageLoaded && <NowPlayingCardLoader />}
+          {!imageLoaded && <NowPlayingCardLoader rounded={false} />}
         </section>
       )}
     </>
