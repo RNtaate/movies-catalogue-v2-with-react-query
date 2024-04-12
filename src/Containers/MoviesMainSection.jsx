@@ -1,20 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
-import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { Dots } from 'react-activity';
 
-import { wait } from '../Helpers/HelperMethods';
 import { getMoviesList } from '../Helpers/HelperFetchMethods';
-import moviesData from '../utils/movies.json';
-import genres from '../utils/genres.json';
-import { NavLink } from 'react-router-dom';
 import MovieBrick from '../Components/MovieBrick';
 import SpinnerLoader from '../Components/loaders/SpinnerLoader';
 import LoadingError from '../Components/ErrorComponents/LoadingError';
 import YearsSelect from '../Components/YearsSelect';
 
-const moviesList = moviesData.results;
-const localgenres = genres.genres;
 const MAXIMUM_PAGES = 5;
 
 const MoviesMainSection = () => {
