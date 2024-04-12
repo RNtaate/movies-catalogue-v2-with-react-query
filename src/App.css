@@ -3,3 +3,19 @@
 body {
   background-image: url('./assets/movie_back.jpg');
 }
+
+.movie-details-slider {
+  animation: slider 1s ease-in-out forwards;
+  animation-delay: 50ms;
+  transform: translateX(-100%);
+}
+
+@keyframes slider {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}

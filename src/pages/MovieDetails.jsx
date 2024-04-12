@@ -63,7 +63,11 @@ const MovieDetails = () => {
             className="w-full h-full object-cover"
             onLoad={() => setImageLoaded(true)}
           />
-          <div className="absolute top-0 right-0 bottom-0 left-0 flex">
+          <div
+            className={`${
+              imageLoaded ? 'movie-details-slider' : ''
+            } absolute top-0 right-0 bottom-0 left-0 flex`}
+          >
             <div className="w-[50%] flex flex-col justify-center gap-4 px-16 bg-gradient-to-r from-black backdrop-blur-[2px] shadow-[0_0_10px_3px_rgba(0,0,0,0.8)]">
               <h1 className="font-roboto text-6xl font-extrabold">
                 {movieDetails.title.toUpperCase()}
