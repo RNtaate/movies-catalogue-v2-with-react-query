@@ -19,8 +19,13 @@ const MAXIMUM_PAGES = 5;
 
 const MoviesMainSection = () => {
   const moviesDataContext = useContext(MoviesDataContext);
-  const { moviesMainList, setMoviesMainList, genresList, selectedGenre } =
-    moviesDataContext;
+  const {
+    moviesMainList,
+    setMoviesMainList,
+    genresList,
+    selectedGenre,
+    selectedYear,
+  } = moviesDataContext;
 
   const {
     status,
@@ -40,7 +45,7 @@ const MoviesMainSection = () => {
       }
     },
     queryFn: ({ pageParam = 1 }) => {
-      return getMoviesList(2024, localgenres[0].id, pageParam).then(
+      return getMoviesList(selectedYear, selectedGenre.id, pageParam).then(
         (res) => res
       );
     },
@@ -58,12 +63,12 @@ const MoviesMainSection = () => {
 
   return (
     <section className="flex flex-col px-5">
-      {/* {movieListQuery.isSuccess && (
+      {status == 'success' && (
         <div className="py-5 mt-4 font-robotoflex text-md font-bold flex items-center justify-between">
           <h2 className="">{selectedGenre.name}</h2>
           <YearsSelect />
         </div>
-      )} */}
+      )}
       <section className="flex flex-wrap justify-evenly gap-2 pb-8">
         {moviesMainList != null &&
           moviesMainList.pages
