@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 
-import singleMovieData from '../utils/SingleMovie.json';
 import { wait, timeConverter, dateConverter } from '../Helpers/HelperMethods';
 import SpinnerLoader from '../Components/loaders/SpinnerLoader';
 import NowPlayingCardLoader from '../Components/loaders/NowPlayingCardLoader';
 import { getMovieDetails } from '../Helpers/HelperFetchMethods';
+import noBackdropPoster from '../assets/no_poster2.png';
 
 const MovieDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const [singleMovie, setSingleMovie] = useState(null);
 
@@ -56,7 +55,11 @@ const MovieDetails = () => {
         <section className="w-screen h-screen overflow-hidden relative">
           <img
             alt="Image backdrop"
-            src={`https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path}`}
+            src={
+              movieDetails.backdrop_path == null
+                ? noBackdropPoster
+                : `https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path}`
+            }
             className="w-full h-full object-cover"
             onLoad={() => setImageLoaded(true)}
           />
