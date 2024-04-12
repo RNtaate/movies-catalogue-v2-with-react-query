@@ -18,7 +18,7 @@ const YearsSelect = ({ disabled = false, hasFetching = false }) => {
   const years = getYears();
   return (
     <div
-      className={`inline-block bg-slate-900/[.6] flex justify-between items-center py-2 w-32 max-w-32 min-w-32 pl-4 pr-3 relative rounded-full text-sm font-robotoflex font-semibold ${
+      className={`inline-block bg-slate-900/[.6] flex justify-between items-center py-2 w-32 max-w-32 min-w-32 pl-4 pr-3 relative rounded-full text-sm font-robotoflex font-semibold z-10 ${
         disabled ? 'pointer-events-none' : 'pointer-events-auto cursor-pointer'
       }`}
       onClick={(e) => setIsOpen(!isOpen)}
