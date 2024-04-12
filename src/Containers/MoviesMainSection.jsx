@@ -25,6 +25,7 @@ const MoviesMainSection = () => {
     status,
     error,
     data,
+    fetchStatus,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
@@ -51,7 +52,8 @@ const MoviesMainSection = () => {
     }
   }, [status, data]);
 
-  if (status == 'loading') return <SpinnerLoader variant="sentry" />;
+  if ((status == 'loading' || fetchStatus == 'fetching') && !isFetchingNextPage)
+    return <SpinnerLoader variant="sentry" />;
   if (status == 'error')
     return <LoadingError message={JSON.stringify(error)} />;
 
