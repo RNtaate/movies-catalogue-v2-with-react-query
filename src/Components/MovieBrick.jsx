@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+
 import NoPoster from '../assets/no_poster1.jpeg';
 import MovieBrickLoader from './loaders/MovieBrickLoader';
+import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 
 const MovieBrick = ({ movie }) => {
+  const movieDataContext = useContext(MoviesDataContext);
+  const { movieDetails } = movieDataContext;
+  const queryClient = useQueryClient();
+
   const [imageLoaded, setImageLoaded] = useState(false);
   const posterPath =
     movie.poster_path == null
@@ -16,7 +23,14 @@ const MovieBrick = ({ movie }) => {
       state={movie}
       className="appearance-none"
     >
-      <div className="group max-w-44 min-w-44 hover:cursor-pointer transition-all">
+      <div
+        className="group max-w-44 min-w-44 hover:cursor-pointer transition-all"
+        onClick={() => {
+          if (movieDetails != null && movieDetails.title != movie.title) {
+            queryClient.invalidateQueries(['movieDetails']);
+          }
+        }}
+      >
         <div className="group-hover:ring-slate-400 group-hover:ring-1 w-full h-[17rem] overflow-hidden rounded-3xl transition-all relative">
           <img
             alt="movie poster"
