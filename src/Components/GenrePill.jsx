@@ -3,7 +3,8 @@ import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 
 const GenrePill = ({ genre }) => {
   const movieDataContext = useContext(MoviesDataContext);
-  const { selectedGenre, setSelectedGenre } = movieDataContext;
+  const { selectedGenre, setSelectedGenre, setIsSearchWithGenresOpen } =
+    movieDataContext;
 
   return (
     <div
@@ -12,7 +13,9 @@ const GenrePill = ({ genre }) => {
           ? 'bg-opacity-20 border-slate-400 hover:bg-slate-300'
           : 'bg-opacity-10 border-transparent hover:bg-slate-900'
       }`}
-      onClick={() => setSelectedGenre({ ...genre })}
+      onClick={() => {
+        setIsSearchWithGenresOpen(true);
+      }}
     >
       {genre.name}
     </div>
