@@ -2,14 +2,10 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 
 import useOutsideClick from '../hooks/useOutsideClick';
-import genres from '../utils/genres.json';
 
-// const genresList = genres.genres;
-
-const GenreSelect = ({ disabled = false, setLocalGenre, localGenre }) => {
+const GenreSelect = ({ disabled = false }) => {
   const movieDataContext = useContext(MoviesDataContext);
   const { genresList, selectedGenre, setSelectedGenre } = movieDataContext;
-  // const [selectedGenre, setSelectedGenre] = useState(genresList[0]);
 
   const [isOpen, setIsOpen] = useState(false);
   const yearRef = useRef(null);
@@ -27,7 +23,7 @@ const GenreSelect = ({ disabled = false, setLocalGenre, localGenre }) => {
       onClick={(e) => setIsOpen(!isOpen)}
       ref={yearRef}
     >
-      <span>{localGenre.name}</span>
+      <span>{selectedGenre.name}</span>
       <i
         className={`fa-solid fa-angle-up transition-all ${
           isOpen ? 'rotate-180' : 'rotate-0'
@@ -46,11 +42,11 @@ const GenreSelect = ({ disabled = false, setLocalGenre, localGenre }) => {
                 key={genre.id}
                 value={genre.name}
                 className={`hover:bg-slate-600/[.7] transition-all cursor-pointer py-2 pl-4 ${
-                  localGenre.name == genre.name ? 'bg-slate-500/[.8]' : ''
+                  selectedGenre.name == genre.name ? 'bg-slate-500/[.8]' : ''
                 }`}
                 onClick={(e) => {
-                  if (e.target.value != localGenre.name) {
-                    setLocalGenre(genre);
+                  if (e.target.value != selectedGenre.name) {
+                    setSelectedGenre(genre);
                   }
                 }}
               >
