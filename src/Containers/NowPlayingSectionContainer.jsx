@@ -8,6 +8,7 @@ import NowPlayingComponent from '../Components/NowPlayingComponent';
 import Marquee from 'react-fast-marquee';
 import SpinnerLoader from '../Components/loaders/SpinnerLoader';
 import LoadingError from '../Components/ErrorComponents/LoadingError';
+import { getNowPlayingMovies } from '../Helpers/HelperFetchMethods';
 
 const moviesList = moviesData.results;
 
@@ -45,12 +46,12 @@ const NowPlayingSectionContainer = () => {
   //React Query and component functionality code.
   const movieListQuery = useQuery({
     queryKey: ['nowPlaying'],
-    queryFn: () => wait(4000).then(() => [...moviesList]),
+    queryFn: () => getNowPlayingMovies().then((res) => res),
   });
 
   useEffect(() => {
     if (movieListQuery.isSuccess) {
-      setNowPlayingMovies(movieListQuery.data);
+      setNowPlayingMovies(movieListQuery.data.data.results);
     }
   }, [movieListQuery.isSuccess]);
 
@@ -106,7 +107,6 @@ const NowPlayingSectionContainer = () => {
               setTranslate((prevTranslate) => {
                 const newTranslate = prevTranslate + TRANSLATE_AMOUNT;
                 const edge = containerRef.current.scrollWidth;
-                const width = containerRef.current.clientWidth;
                 console.log(edge, width);
                 if (newTranslate + width >= edge) return edge - width;
                 return newTranslate;
