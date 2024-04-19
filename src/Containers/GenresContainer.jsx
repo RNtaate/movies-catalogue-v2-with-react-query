@@ -7,6 +7,7 @@ import { wait } from '../Helpers/HelperMethods';
 import GenrePill from '../Components/GenrePill';
 import SpinnerLoader from '../Components/loaders/SpinnerLoader';
 import LoadingError from '../Components/ErrorComponents/LoadingError';
+import { getGenresList } from '../Helpers/HelperFetchMethods';
 
 const genres = genresJsonData.genres;
 const TRANSLATE_AMOUNT = 200;
@@ -52,16 +53,16 @@ const GenresContainer = () => {
     queryKey: ['genres'],
     enabled: nowPlayingMovies.length != 0,
     queryFn: () => {
-      return wait(4000).then(() => [...genres]);
+      return getGenresList().then((res) => res);
     },
   });
 
   useEffect(() => {
     if (genresListQuery.isSuccess) {
-      const genresArray = genresListQuery.data;
+      const genresArray = genresListQuery.data.data.genres;
       const defaultGenre = {
         id: `${genresArray[0].id}|${genresArray[1].id}`,
-        name: 'Action & Adventure',
+        name: `${genresArray[0].name} & ${genresArray[1].name}`,
       };
       setGenresList([{ ...defaultGenre }, ...genresArray]);
       if (selectedGenre == null) setSelectedGenre({ ...defaultGenre });
