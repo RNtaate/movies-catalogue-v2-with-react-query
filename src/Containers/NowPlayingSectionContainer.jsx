@@ -102,6 +102,7 @@ const NowPlayingSectionContainer = () => {
               setTranslate((prevTranslate) => {
                 const newTranslate = prevTranslate + TRANSLATE_AMOUNT;
                 const edge = containerRef.current.scrollWidth;
+                const width = containerRef.current.clientWidth;
                 console.log(edge, width);
                 if (newTranslate + width >= edge) return edge - width;
                 return newTranslate;
