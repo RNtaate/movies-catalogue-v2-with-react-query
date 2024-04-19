@@ -24,7 +24,7 @@ const NavBar = () => {
       </span>
       <div className="flex gap-3 text-slate-300">
         <NavLink
-          to="https://github.com/RNtaate"
+          to="https://github.com/RNtaate/movies-catalogue-v2-with-react-query"
           target="_blank"
           rel="noopener noreferrer"
         >
