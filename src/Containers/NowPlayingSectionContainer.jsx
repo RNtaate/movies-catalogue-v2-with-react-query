@@ -2,15 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 import { useQuery } from '@tanstack/react-query';
 
-import { wait } from '../Helpers/HelperMethods';
-import moviesData from '../utils/movies.json';
 import NowPlayingComponent from '../Components/NowPlayingComponent';
-import Marquee from 'react-fast-marquee';
 import SpinnerLoader from '../Components/loaders/SpinnerLoader';
 import LoadingError from '../Components/ErrorComponents/LoadingError';
 import { getNowPlayingMovies } from '../Helpers/HelperFetchMethods';
-
-const moviesList = moviesData.results;
 
 const TRANSLATE_AMOUNT = 200;
 
