@@ -9,6 +9,7 @@
 - ReactJS
 - Vite
 - Node Package Manager(npm)
+- [Tailwind CSS](https://tailwindcss.com/)
 - [The Movie Database API(TMDB)](https://www.themoviedb.org/documentation/api)
 
 ## 🔴 Live Demo
@@ -31,6 +32,8 @@ There are two ways of contributing to this project:
    1. Write your code which fixes the issue you found
    1. Commit and push the branch you created
    1. Raise a pull request, comparing your new created branch with my original **master** or **main** branch [here](https://github.com/RNtaate/movies-catalogue-v2-with-react-query)
+
+## ✒️ Authors
 
 👤 **Roy Ntaate**
 
