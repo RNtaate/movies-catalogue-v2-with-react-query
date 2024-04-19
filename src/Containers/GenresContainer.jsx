@@ -2,14 +2,11 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
 import { useQuery } from '@tanstack/react-query';
 
-import genresJsonData from '../utils/genres.json';
-import { wait } from '../Helpers/HelperMethods';
 import GenrePill from '../Components/GenrePill';
 import SpinnerLoader from '../Components/loaders/SpinnerLoader';
 import LoadingError from '../Components/ErrorComponents/LoadingError';
 import { getGenresList } from '../Helpers/HelperFetchMethods';
 
-const genres = genresJsonData.genres;
 const TRANSLATE_AMOUNT = 200;
 
 const GenresContainer = () => {
@@ -81,7 +78,7 @@ const GenresContainer = () => {
           style={{ transform: `translateX(-${translate}px)` }}
         >
           {genresList.map((genre) => {
-            return <GenrePill genre={genre} />;
+            return <GenrePill genre={genre} key={genre.id} />;
           })}
         </div>
         {isLeftShowing && (
