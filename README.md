@@ -1,5 +1,7 @@
 # Movies Catalogue v2
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/0afdb8c8-5a36-4bbd-bdbe-76ddbe9b4ccb/deploy-status)](https://app.netlify.com/sites/norp-movies/deploys)
+
 ## Project Description
 
 > A react web application built to demonstrate an understanding of [React Query/TanStack Query](https://tanstack.com/query/latest/docs/framework/react/overview) and styling using [Tailwind CSS](https://tailwindcss.com/)
@@ -15,7 +17,7 @@
 
 ## 🔴 Live Demo
 
-> Coming soon.
+[Live Demo](https://norp-movies.netlify.app)
 
 ## 🤝 Contributions
 

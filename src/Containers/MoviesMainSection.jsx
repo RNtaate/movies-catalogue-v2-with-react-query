@@ -53,7 +53,12 @@ const MoviesMainSection = () => {
   }, [status, data]);
 
   if ((status == 'loading' || fetchStatus == 'fetching') && !isFetchingNextPage)
-    return <SpinnerLoader variant="sentry" />;
+    return (
+      <div className="flex flex-col justify-center items-center">
+        <SpinnerLoader variant="sentry" />
+        <h3>Loading Movies...</h3>
+      </div>
+    );
   if (status == 'error')
     return <LoadingError message={JSON.stringify(error)} />;
 
