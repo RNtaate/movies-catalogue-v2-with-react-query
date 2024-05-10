@@ -4,12 +4,19 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import NowPlayingCardLoader from './loaders/NowPlayingCardLoader';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
+import no_backdrop from '../assets/no_poster2.png';
 
 const NowPlayingComponent = ({ movie }) => {
   const movieDataContext = useContext(MoviesDataContext);
   const { movieDetails } = movieDataContext;
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const queryClient = useQueryClient();
+
+  const backdrop_path =
+    movie.backdrop_path == null
+      ? no_backdrop
+      : `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
+
   return (
     <NavLink
       to={`/movie/${movie.title}`}
@@ -26,7 +33,7 @@ const NowPlayingComponent = ({ movie }) => {
       >
         <img
           alt="movie poster"
-          src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+          src={backdrop_path}
           className="w-full h-full object-cover"
           onLoad={() => setIsImageLoaded(true)}
         />

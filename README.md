@@ -9,6 +9,7 @@
 - ReactJS
 - Vite
 - Node Package Manager(npm)
+- [React Query/TanStack Query](https://tanstack.com/query/latest/docs/framework/react/overview)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [The Movie Database API(TMDB)](https://www.themoviedb.org/documentation/api)
 
