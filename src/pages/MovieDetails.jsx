@@ -41,7 +41,12 @@ const MovieDetails = () => {
   }, [movieDetailsQuery.isSuccess, movieDetailsQuery.data]);
 
   if (movieDetailsQuery.isLoading || movieDetailsQuery.isFetching)
-    return <SpinnerLoader variant="sentry" />;
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <SpinnerLoader variant="sentry" />
+        <h3>Loading Movie...</h3>
+      </div>
+    );
   if (movieDetailsQuery.isError)
     return (
       <div>
