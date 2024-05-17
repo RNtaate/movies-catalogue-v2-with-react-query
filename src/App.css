@@ -5,9 +5,14 @@ body {
 }
 
 .movie-details-slider {
-  animation: slider 1s ease-in-out forwards;
+  animation: slider 1s ease-in-out;
   animation-delay: 50ms;
-  transform: translateX(-100%);
+  transition: all 1s ease-in-out;
+}
+
+.slide-back {
+  transform: translateX(-45%);
+  transition: all 1s ease-in-out;
 }
 
 @keyframes slider {
