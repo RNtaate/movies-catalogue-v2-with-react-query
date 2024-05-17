@@ -14,6 +14,7 @@ const MovieDetails = () => {
   const navigate = useNavigate();
 
   const [singleMovie, setSingleMovie] = useState(null);
+  const [slide, setSlide] = useState(true);
 
   useEffect(() => {
     if (!location.state) {
@@ -71,7 +72,7 @@ const MovieDetails = () => {
           <div
             className={`${
               imageLoaded ? 'movie-details-slider' : ''
-            } absolute top-0 right-0 bottom-0 left-0 flex`}
+            } ${slide ? '' : 'slide-back'} absolute top-0 right-0 bottom-0 left-0 flex`}
           >
             <div className="w-[50%] flex flex-col justify-center gap-4 px-16 bg-gradient-to-r from-black backdrop-blur-[2px] shadow-[0_0_10px_3px_rgba(0,0,0,0.8)]">
               <h1 className="font-roboto text-6xl font-extrabold">
@@ -94,6 +95,14 @@ const MovieDetails = () => {
                   {movieDetails.vote_average.toFixed(1)}
                 </span>
               </div>
+            </div>
+            <div
+              onClick={() => setSlide(!slide)}
+              className={`absolute text-5xl bottom-2 left-[50%] cursor-pointer flex justify-center items-center`}
+            >
+              <i
+                className={`${slide ? 'rotate-0' : 'rotate-180'} fa-solid fa-caret-left ease-in-out duration-300`}
+              ></i>
             </div>
           </div>
 
