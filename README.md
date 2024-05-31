@@ -15,6 +15,11 @@
 - [Tailwind CSS](https://tailwindcss.com/)
 - [The Movie Database API(TMDB)](https://www.themoviedb.org/documentation/api)
 
+## Screenshots
+
+![](/public/movies_react_query_screenshot1.png)
+![](/public/movies_react_query_screenshot2.png)
+
 ## 🔴 Live Demo
 
 [Live Demo](https://norp-movies.netlify.app)
