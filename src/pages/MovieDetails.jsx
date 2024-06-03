@@ -61,11 +61,12 @@ const MovieDetails = () => {
         <section className="w-screen h-screen overflow-hidden relative">
           <img
             alt="Image backdrop"
-            src={
-              movieDetails.backdrop_path == null
-                ? noBackdropPoster
-                : `https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path}`
-            }
+            src={`
+              ${
+                movieDetails.backdrop_path == null
+                  ? noBackdropPoster
+                  : `https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path}`
+              }?${Math.random()}`}
             className="w-full h-full object-cover"
             onLoad={() => setImageLoaded(true)}
           />
