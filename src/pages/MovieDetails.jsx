@@ -87,6 +87,14 @@ const MovieDetails = () => {
               <p className="text-[13px] tracking-wide leading-6 line-clamp-5 font-normal my-3">
                 {movieDetails.overview}
               </p>
+
+              <div className="flex flex-wrap gap-3 text-xs font-robotoflex font-extrabold mb-3">
+                <span className="font-thin">Cast : </span>
+                {movieDetails.credits.cast.map((actor, index) => {
+                  return index <= 5 && <span>{actor.name.toUpperCase()}</span>;
+                })}
+              </div>
+
               <div className="flex flex-wrap gap-3 text-xs font-robotoflex font-extrabold">
                 {movieDetails.genres.map((genre) => {
                   return <span>{genre.name.toUpperCase()}</span>;
