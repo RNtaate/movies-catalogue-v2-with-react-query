@@ -11,6 +11,7 @@ const MoviesDataContextProvider = ({ children }) => {
   const [selectedYear, setSelectedYear] = useState(CURRENT_YEAR);
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [isSearchWithGenresOpen, setIsSearchWithGenresOpen] = useState(false);
+  const [homePageScrollPos, setHomePageScrollPos] = useState(0);
 
   const finalValues = {
     nowPlayingMovies,
@@ -27,6 +28,8 @@ const MoviesDataContextProvider = ({ children }) => {
     setSelectedGenre,
     isSearchWithGenresOpen,
     setIsSearchWithGenresOpen,
+    homePageScrollPos,
+    setHomePageScrollPos,
   };
 
   return (
