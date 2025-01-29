@@ -6,7 +6,6 @@ import MoviesMainSection from '../Containers/MoviesMainSection';
 import NavBar from '../Containers/NavBar';
 import SearchWithGenres from '../Components/SearchWithGenres';
 import { MoviesDataContext } from '../Context/MoviesDataContextProvider';
-import useScrollToPosition from '../hooks/useScrollToPosition';
 
 const Home = () => {
   const movieDataContext = useContext(MoviesDataContext);
